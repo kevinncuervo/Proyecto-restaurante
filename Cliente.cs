@@ -1,3 +1,5 @@
+namespace Listas;
+
 public class Cliente
 {
     private string cedula;
@@ -5,6 +7,13 @@ public class Cliente
     private string celular;
     private string email;
 
+     public Cliente()
+        {
+            this.cedula = "";
+            this.nombre = "";
+            this.celular = "";
+            this.email = "";
+        }
     public Cliente(string cedula, string nombre, string celular, string email)
     {
         this.cedula = cedula;

@@ -1,0 +1,89 @@
+namespace Listas;
+
+public class SistemaRestaurante
+{
+    private ListaEnlazada<Restaurante> ListaRestaurante = new ListaEnlazada<Restaurante>();
+
+    public void AgregarRestaurante(Restaurante restaurante)
+    {
+        ListaRestaurante.Agregar(restaurante);
+        Console.WriteLine("Restaurante agregado: " + restaurante.Nombre);
+
+    }
+    public void AgregarRestaurante(string nit, string nombre, string dueño, string celular, string direccion)
+    {
+        Restaurante restaurante = new (nit, nombre, dueño, celular, direccion);
+        ListaRestaurante.Agregar(restaurante);
+        Console.WriteLine("Restaurante agregado: " + restaurante.Nombre);
+    }
+
+    public bool Lleno()
+    {
+        return ListaRestaurante.Cabeza != null;
+    }
+    public void ListarRestaurante()
+    {
+        int contador = 0;
+        Nodo<Restaurante> actual = ListaRestaurante.Cabeza;
+        while (actual != null)
+        {
+            contador++;
+            Console.WriteLine("Restaurante #" + contador);
+            Console.WriteLine("-------------------------------------");
+            Console.WriteLine("NIT: " + actual.Valor.Nit);
+            Console.WriteLine("Nombre: " + actual.Valor.Nombre);
+            Console.WriteLine("Dueño: " + actual.Valor.Dueño);
+            Console.WriteLine("Celular: " + actual.Valor.Celular);
+            Console.WriteLine("Dirección: " + actual.Valor.Direccion);
+            Console.WriteLine("-------------------------------------");
+            actual = actual.Siguiente;
+        }
+    }
+
+    public void BorrarRestaurante(string identificador)
+{
+    if (ListaRestaurante.Cabeza == null)
+    {
+        Console.WriteLine("No hay restaurantes para borrar.");
+        return;
+    }
+
+    Nodo<Restaurante> actual = ListaRestaurante.Cabeza;
+    Nodo<Restaurante> previo = null;
+
+    while (actual != null)
+    {
+        if (actual.Valor.Nombre == identificador || actual.Valor.Nit == identificador)
+        {
+            if (previo == null)
+            {
+                ListaRestaurante.Cabeza = actual.Siguiente;
+            }
+            else
+            {
+                previo.Siguiente = actual.Siguiente;
+            }
+            Console.WriteLine("Restaurante eliminado: " + actual.Valor.Nombre);
+            return;
+        }
+        previo = actual;
+        actual = actual.Siguiente;
+    }
+
+    Console.WriteLine("No se encontró ningún restaurante con el Nit: " + identificador);
+}
+    public Restaurante EscogerRestaurante(string identificador)
+    {
+        Nodo<Restaurante> actual = ListaRestaurante.Cabeza;
+        while (actual != null)
+        {
+            if (actual.Valor.Nombre == identificador || actual.Valor.Nit == identificador)
+            {
+                return actual.Valor;
+            }
+            actual = actual.Siguiente;
+        }
+        Console.WriteLine("No se encontró ningún restaurante con el Nit: " + identificador);
+        return null;
+    }
+}

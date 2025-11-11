@@ -1,3 +1,5 @@
+namespace Listas;
+
 public class Plato
 {
     private string codigo;
@@ -33,5 +35,5 @@ public class Plato
         get { return precio; }
         set { precio = value; }
     }
-    
+
 }
