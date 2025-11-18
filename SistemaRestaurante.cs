@@ -23,6 +23,16 @@ public class SistemaRestaurante
             Console.WriteLine("El restaurante con NIT: " + nit + " ya existe.");
             return;
         }
+        if (string.IsNullOrWhiteSpace(nit) || string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(dueño) || string.IsNullOrWhiteSpace(celular) || string.IsNullOrWhiteSpace(direccion))
+        {
+            Console.WriteLine("Todos los campos son obligatorios para agregar un restaurante.");
+            return;
+        }
+        if (celular.Length != 10 || !celular.All(char.IsDigit))
+        {
+            Console.WriteLine("El número de celular debe tener 10 dígitos y solo contener números.");
+            return;
+        }
 
         Restaurante restaurante = new Restaurante(nit, nombre, dueño, celular, direccion);
         ListaRestaurante.Agregar(restaurante);
@@ -41,14 +51,6 @@ public class SistemaRestaurante
         }
         return false;
     }
-
-    public void AgregarRestaurante(string nit, string nombre, string dueño, string celular, string direccion)
-    {
-        Restaurante restaurante = new (nit, nombre, dueño, celular, direccion);
-        ListaRestaurante.Agregar(restaurante);
-        Console.WriteLine("Restaurante agregado: " + restaurante.Nombre);
-    }
-
     public bool Lleno()
     {
         return ListaRestaurante.Cabeza != null;
@@ -85,7 +87,7 @@ public class SistemaRestaurante
 
     while (actual != null)
     {
-        if (actual.Valor.Nombre == identificador || actual.Valor.Nit == identificador)
+        if (actual.Valor.Nit == identificador)
         {
             if (previo == null)
             {
