@@ -56,7 +56,7 @@ public class Restaurante
             return ListaCliente.Cabeza;
         }
 
-        public void BorrarCliente(int identificador)
+        public void BorrarCliente(string identificador)
         {
 
             if (ListaCliente.Cabeza == null)
@@ -74,7 +74,7 @@ public class Restaurante
                 {
                     if (previo == null)
                     {
-                        ListarCliente.Cabeza = actual.Siguiente;
+                        ListaCliente.Cabeza = actual.Siguiente;
                     }
                     else
                     {
@@ -87,6 +87,77 @@ public class Restaurante
                 actual = actual.Siguiente;
             }
             Console.WriteLine("No se encontró el cliente con cédula: " + identificador);
+        }
+
+private ListaEnlazada<Plato> ListaPlato = new ListaEnlazada<Plato>();
+   
+        public void AgregarPlatos(Plato plato)
+        {
+            ListaPlato.Agregar(plato);
+            Console.WriteLine("Plato creado: " + plato.Nombre);
+        }
+
+        public void AgregarPlatos(string codigo, string nombre, string descripcion, decimal precio)
+        {
+            Plato plato = new Plato(codigo, nombre, descripcion, precio);
+            ListaPlato.Agregar(plato);
+            Console.WriteLine("Plato agregado: " + plato.Nombre);
+        }
+
+        public void ListarPlatos()
+        {
+            int contador = 0;
+            Nodo<Plato> actual = ListaPlato.Cabeza;
+            while (actual != null)
+            {
+                contador++;
+                Console.WriteLine("Plato #" + contador);
+                Console.WriteLine("-------------------------------------");
+                Console.WriteLine("Código: " + actual.Valor.Codigo);
+                Console.WriteLine("Nombre: " + actual.Valor.Nombre);
+                Console.WriteLine("Descripción: " + actual.Valor.Descripcion);
+                Console.WriteLine("Precio: " + actual.Valor.Precio);
+                Console.WriteLine("-------------------------------------");
+                actual = actual.Siguiente;
+            }
+        }
+
+        public Nodo<Plato> CabezaPlato()
+        {
+            return ListaPlato.Cabeza;
+        }
+
+        public void BorrarPlatos(string identificador)
+        {
+
+            if (ListaPlato.Cabeza == null)
+            {
+                Console.WriteLine("No hay platos para borrar.");
+                return;
+            }
+
+            Nodo<Plato> actual = ListaPlato.Cabeza;
+            Nodo<Plato> previo = null;
+
+            while (actual != null)
+            {
+                if (actual.Valor.Codigo == identificador)
+                {
+                    if (previo == null)
+                    {
+                        ListaPlato.Cabeza = actual.Siguiente;
+                    }
+                    else
+                    {
+                        previo.Siguiente = actual.Siguiente;
+                    }
+                    Console.WriteLine("Plato borrado: " + actual.Valor.Codigo + " " + actual.Valor.Nombre);
+                    return;
+                }
+                previo = actual;
+                actual = actual.Siguiente;
+            }
+            Console.WriteLine("No se encontró el producto con código: " + identificador);
         }
 
     public string Nit
@@ -119,5 +190,4 @@ public class Restaurante
         set { direccion = value; }
     }
 
-    public object ListaCliente { get; private set; }
 }

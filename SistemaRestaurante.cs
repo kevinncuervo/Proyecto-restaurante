@@ -6,10 +6,42 @@ public class SistemaRestaurante
 
     public void AgregarRestaurante(Restaurante restaurante)
     {
+        if (RestauranteExiste(restaurante.Nit))
+        {
+            Console.WriteLine("El restaurante con NIT: " + restaurante.Nit + " ya existe.");
+            return;
+        }
+
+        ListaRestaurante.Agregar(restaurante);
+        Console.WriteLine("Restaurante creado: " + restaurante.Nombre);
+    }
+
+    public void AgregarRestaurante(string nit, string nombre, string dueño, string celular, string direccion)
+    {
+        if (RestauranteExiste(nit))
+        {
+            Console.WriteLine("El restaurante con NIT: " + nit + " ya existe.");
+            return;
+        }
+
+        Restaurante restaurante = new Restaurante(nit, nombre, dueño, celular, direccion);
         ListaRestaurante.Agregar(restaurante);
         Console.WriteLine("Restaurante agregado: " + restaurante.Nombre);
-
     }
+    private bool RestauranteExiste(string nit)
+    {
+        Nodo<Restaurante> actual = ListaRestaurante.Cabeza;
+        while (actual != null)
+        {
+            if (actual.Valor.Nit == nit)
+            {
+                return true;
+            }
+        actual = actual.Siguiente;
+        }
+        return false;
+    }
+
     public void AgregarRestaurante(string nit, string nombre, string dueño, string celular, string direccion)
     {
         Restaurante restaurante = new (nit, nombre, dueño, celular, direccion);
