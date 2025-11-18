@@ -8,7 +8,7 @@ public class Pedido
     private string cedulacliente;
     private string estado;
     private decimal total;
-    private cola<Platopedido> platos;
+    private Cola<Platopedido> platos;
     private DateTime fechaHora;
 
     public Pedido(string cedulacliente)

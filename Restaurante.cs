@@ -23,7 +23,8 @@ public class Restaurante
     private Pila<decimal> ReporteVentas = new Pila<decimal>();
 
     private ListaEnlazada<Cliente> ListaCliente = new ListaEnlazada<Cliente>();
-   
+    private Cola<Pedido> ColaPedidos = new Cola<Pedido>();
+
         public void AgregarCliente(Cliente cliente)
         {
             if(ClienteExiste(cliente.Cedula))
