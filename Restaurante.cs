@@ -1,4 +1,5 @@
 namespace Listas;
+using System;
 
 public class Restaurante
 {
@@ -502,6 +503,113 @@ private ListaEnlazada<Plato> ListaPlato = new ListaEnlazada<Plato>();
             tempCola.Eliminar();
         }
     }
+
+    public Pedido BuscarPedidoPorID(int id)
+    {
+        if (ColaPedidos.EstaVacia())
+        {
+            return null;
+        }
+
+        Cola<Pedido> tempCola = new Cola<Pedido>();
+        Pedido pedidoEncontrado = null;
+        int cantidad = ColaPedidos.Tamano();
+
+        for (int i = 0; i < cantidad; i++)
+        {
+            Pedido pedidoActual = ColaPedidos.Primero();
+
+            if (pedidoActual.IdPedido == id)
+            {
+                pedidoEncontrado = pedidoActual;
+            }
+            tempCola.Agregar(pedidoActual);
+            ColaPedidos.Eliminar();
+        }
+        for (int i = 0; i < cantidad; i++)
+        {
+            ColaPedidos.Agregar(tempCola.Primero());
+            tempCola.Eliminar();
+        }
+
+        return pedidoEncontrado;
+    }
+
+    public void EditarPedido(int id)
+    {
+        Pedido pedido = BuscarPedidoPorID(id);
+        if (pedido == null)
+        {
+            Console.WriteLine("No se encontró el pedido con ID: " + id);
+            return;
+        }
+
+        if (pedido.Estado != "Pendiente")
+        {
+            Console.WriteLine("Solo se pueden editar pedidos en estado 'Pendiente'.");
+            return;
+        }
+
+        Console.WriteLine("Resumen del pedido actual:");
+        pedido.MostrarResumen();
+
+        while (true)
+        {
+           Console.WriteLine("Opciones de edición:");
+           Console.WriteLine("1. Cambiar cantidad de un plato");
+           Console.WriteLine("2. Eliminar un plato");
+           Console.WriteLine("3. Agregar un nuevo plato");
+           Console.WriteLine("4. Salir");
+           Console.Write("Seleccione una opción: ");
+           string opcion = Console.ReadLine();   
+
+           if (opcion == "1")
+            {
+                Console.WriteLine("Ingrese el código del plato a modificar:");
+                string codigoPlato = Console.ReadLine();
+
+                Cola<Platopedido> tempPlatos = new Cola<Platopedido>();
+                bool platoEncontrado = false;
+                int cantidadPlatos = pedido.Platos.Tamano();
+                
+                for (int i = 0; i < cantidadPlatos; i++)
+                {
+                    Platopedido platoActual = pedido.Platos.Primero();
+                    pedido.Platos.Eliminar();
+
+                    if (!platoEncontrado && platoActual.CodigoPedido == codigoPlato)
+                    {
+                        Console.WriteLine("Ingrese la nueva cantidad: ");
+                        if (int.TryParse(Console.ReadLine(), out int nuevaCantidad) && nuevaCantidad > 0)
+                        {
+                            platoActual.Cantidad = nuevaCantidad;
+                            platoEncontrado = true;
+                            Console.WriteLine("Cantidad actualizada.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Cantidad inválida. Debe ser un número mayor a 0.");
+                        }
+                    }
+                    tempPlatos.Agregar(platoActual);
+                }
+
+                for (int i = 0; i < cantidadPlatos; i++)
+                {
+                    pedido.Platos.Agregar(tempPlatos.Primero());
+                    tempPlatos.Eliminar();
+                }
+
+                if (!platoEncontrado)
+                {
+                    Console.WriteLine("No se encontró el plato con código: " + codigoPlato);
+                }
+            }
+
+        }
+    }
+
+    
     public string Nit
     {
         get { return nit; }
