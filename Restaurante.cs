@@ -437,7 +437,71 @@ private ListaEnlazada<Plato> ListaPlato = new ListaEnlazada<Plato>();
         }
     }
 
+    public void ListarPedidosPendientes()
+    {
+        if (ColaPedidos.EstaVacia())
+        {
+            Console.WriteLine("No hay pedidos pendientes.");
+            return;
+        }
+        Cola<Pedido> tempCola = new Cola<Pedido>();
+        int contador = 1;
 
+        int cantidad = ColaPedidos.Tamano();
+
+        for (int i = 0; i < cantidad; i++)
+        {
+            Pedido pedidoActual = ColaPedidos.Primero();
+
+            if (pedidoActual.Estado == "Pendiente")
+            {
+                Console.WriteLine($"Pedido #{contador}");
+                pedidoActual.MostrarResumen();
+                contador++;
+            }
+            tempCola.Agregar(pedidoActual);
+            ColaPedidos.Eliminar();    
+        }
+        if (contador == 1)
+        {
+            Console.WriteLine("No hay pedidos pendientes.");
+        }
+        for (int i = 0; i < cantidad; i++)
+        {
+            ColaPedidos.Agregar(tempCola.Primero());
+            tempCola.Eliminar();
+        }
+    }
+    
+    public void BuscarPedidoID(int id)
+    {
+        if (ColaPedidos.EstaVacia())
+        {
+            Console.WriteLine("No hay pedidos en la cola.");
+            return;
+        }
+
+        Cola<Pedido> tempCola = new Cola<Pedido>();
+        Pedido pedidoEncontrado = null;
+        int cantidad = ColaPedidos.Tamano();
+
+        for (int i = 0; i < cantidad; i++)
+        {
+            Pedido pedidoActual = ColaPedidos.Primero();
+
+            if (pedidoActual.IdPedido == id)
+            {
+                pedidoEncontrado = pedidoActual;
+            }
+            tempCola.Agregar(pedidoActual);
+            ColaPedidos.Eliminar();
+        }
+        for (int i = 0; i < cantidad; i++)
+        {
+            ColaPedidos.Agregar(tempCola.Primero());
+            tempCola.Eliminar();
+        }
+    }
     public string Nit
     {
         get { return nit; }
