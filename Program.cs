@@ -5,6 +5,7 @@ class Program
     {
         static ListaEnlazada<Restaurante> ListaRestaurante = new ListaEnlazada<Restaurante>();
         static Restaurante restauranteActual = null;
+        static SistemaRestaurante sistema = new SistemaRestaurante();
 
         static void Main(string[] args)
         {
@@ -18,28 +19,20 @@ class Program
                 Console.Clear();
                 Console.WriteLine("----- Sistema de Gestión de Restaurantes -----");
 
-                if(ListaRestaurante.Cabeza == null)
+                if(!sistema.Lleno())
                 {
                     Console.WriteLine("No hay restaurantes registrados.");
                     CrearRestaurante();
                 }
                 else
                 {
-                   Console.WriteLine("Restaurantes disponibles:");
-                   Nodo<Restaurante> actual = ListaRestaurante.Cabeza;
-                   int indice = 1;
-                   while (actual != null)
-                {
-                    Console.WriteLine($"{indice}. {actual.Valor.Nombre}");
-                    actual = actual.Siguiente;
-                    indice++;
-                } 
-                    Console.WriteLine($"{indice}. Crear nuevo restaurante");
-
+                    Console.WriteLine("Restaurantes disponibles:");
+                    sistema.ListarRestaurante();
+                                      
                     Console.WriteLine("Seleccione un restaurante por número:");
                     string input = Console.ReadLine();
 
-                    int cantidadRestaurantes = indice - 1;
+                    int cantidadRestaurantes = sistema.CantidadRestaurantes();
                     if (int.TryParse(input, out int opcion) && opcion >= 1 && opcion <= cantidadRestaurantes + 1)
                         
                     {
@@ -49,12 +42,8 @@ class Program
                         }
                         else
                         {
-                            Nodo<Restaurante> nodoSeleccionado = ListaRestaurante.Cabeza;
-                            for (int i = 1; i < opcion && nodoSeleccionado != null; i++)
-                            {
-                                nodoSeleccionado = nodoSeleccionado.Siguiente;
-                            }
-                            restauranteActual = nodoSeleccionado.Valor;
+                            restauranteActual = sistema.EscogerRestaurantePorIndice(opcion);
+
                             MostrarMenuPrincipal();
                         }
                     }
@@ -82,9 +71,8 @@ class Program
             Console.Write("Ingrese la dirección del restaurante: ");
             string direccion = Console.ReadLine();
 
-            Restaurante restaurante = new Restaurante(nit, nombre, dueño, celular, direccion);
-            ListaRestaurante.Agregar(restaurante);
-            restauranteActual = restaurante;
+            sistema.AgregarRestaurante(nit, nombre, dueño, celular, direccion);
+            restauranteActual = sistema.EscogerRestaurante(nit);
 
             Console.WriteLine($"Restaurante '{nombre}' creado exitosamente. Presione Enter para continuar.");
             Console.ReadLine();
@@ -170,7 +158,7 @@ class Program
 
                     if (confirmacion.ToLower() == "sí" || confirmacion.ToLower() == "si" || confirmacion.ToLower() == "s" || confirmacion.ToLower() == "SÍ" || confirmacion.ToLower() == "SI" || confirmacion.ToLower() == "S")
                     {
-                        ListaRestaurante.Eliminar(restauranteActual);
+                        sistema.BorrarRestaurante(restauranteActual.Nit);
                         restauranteActual = null;
                         Console.WriteLine("Restaurante eliminado exitosamente. Presione Enter para continuar.");
                         Console.ReadLine();

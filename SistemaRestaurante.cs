@@ -120,4 +120,32 @@ public class SistemaRestaurante
         Console.WriteLine("No se encontró ningún restaurante con el Nit: " + identificador);
         return null;
     }
+    public Restaurante EscogerRestaurantePorIndice(int indice)
+    {
+        Nodo<Restaurante> actual = ListaRestaurante.Cabeza;
+        int contador = 1;
+
+        while (actual != null)
+        {
+            if (contador == indice)
+            {
+                return actual.Valor;
+            }
+            actual = actual.Siguiente;
+            contador++;
+        }
+        Console.WriteLine("No se encontró ningún restaurante en el índice: " + indice);
+        return null;
+    }
+    public int CantidadRestaurantes()
+    {
+        int contador = 0;
+        Nodo<Restaurante> actual = ListaRestaurante.Cabeza;
+        while (actual != null)
+        {
+            contador++;
+            actual = actual.Siguiente;
+        }
+        return contador;
+    }
 }
