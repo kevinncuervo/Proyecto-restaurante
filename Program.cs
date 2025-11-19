@@ -95,11 +95,11 @@ class Program
             {
                 Console.Clear();
                 Console.WriteLine($"----- Restaurante: {restauranteActual.Nombre} -----");
+                Console.WriteLine("0. Volver al menú de restaurantes");
                 Console.WriteLine("1. Restaurante");
                 Console.WriteLine("2. Cliente");
                 Console.WriteLine("3. Plato");
                 Console.WriteLine("4. Pedido");
-                Console.WriteLine("5. Volver al menú de restaurantes");
                 Console.Write("Seleccione una opción: ");
                 string opcion = Console.ReadLine();
 
@@ -119,7 +119,7 @@ class Program
                 {
                     MostrarMenuPedido();
                 }
-                else if (opcion == "5")
+                else if (opcion == "0")
                 {
                     return;
                 }
@@ -136,9 +136,9 @@ class Program
             {
                 Console.Clear();
                 Console.WriteLine($"----- Gestión del Restaurante: {restauranteActual.Nombre} -----");
+                Console.WriteLine("0. Volver al menú anterior");
                 Console.WriteLine("1. Editar restaurante");
                 Console.WriteLine("2. Eliminar restaurante");
-                Console.WriteLine("3. Volver al menú principal");
                 Console.Write("Seleccione una opción: ");
                 string opcion = Console.ReadLine();
 
@@ -177,7 +177,7 @@ class Program
                         return;
                     }
                 }
-                 else if (opcion == "3")
+                 else if (opcion == "0")
                 {
                     return;
                 }
@@ -194,11 +194,11 @@ class Program
             {
                 Console.Clear();
                 Console.WriteLine($"----- Gestión de Clientes en: {restauranteActual.Nombre} -----");
+                Console.WriteLine("0. Volver al menú anterior");
                 Console.WriteLine("1. Crear cliente");
                 Console.WriteLine("2. Editar cliente");
                 Console.WriteLine("3. Eliminar cliente");
                 Console.WriteLine("4. Listar clientes");
-                Console.WriteLine("5. Volver al menú anterior");
                 Console.Write("Seleccione una opción: ");
                 string opcion = Console.ReadLine();
 
@@ -251,7 +251,7 @@ class Program
                     Console.WriteLine("Presione Enter para continuar.");
                     Console.ReadLine();
                 }
-                else if (opcion == "5")
+                else if (opcion == "0")
                 {
                     return;
                 }
@@ -268,11 +268,11 @@ class Program
             {
                 Console.Clear();
                 Console.WriteLine($"----- Gestión de Platos en: {restauranteActual.Nombre} -----");
+                Console.WriteLine("0. Volver al menú anterior");
                 Console.WriteLine("1. Crear plato");
                 Console.WriteLine("2. Editar plato");
                 Console.WriteLine("3. Eliminar plato");
                 Console.WriteLine("4. Listar platos");
-                Console.WriteLine("5. Volver al menú anterior");
                 Console.Write("Seleccione una opción: ");
                 string opcion = Console.ReadLine();
 
@@ -335,7 +335,7 @@ class Program
                     Console.WriteLine("Presione Enter para continuar.");
                     Console.ReadLine();
                 }
-                else if (opcion == "5")
+                else if (opcion == "0")
                 {
                     return;
                 }
