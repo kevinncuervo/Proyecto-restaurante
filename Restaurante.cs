@@ -1,5 +1,6 @@
 namespace Listas;
 using System;
+using System.Runtime.Serialization.Formatters;
 
 public class Restaurante
 {
@@ -580,9 +581,9 @@ private ListaEnlazada<Plato> ListaPlato = new ListaEnlazada<Plato>();
                     if (!platoEncontrado && platoActual.CodigoPedido == codigoPlato)
                     {
                         Console.WriteLine("Ingrese la nueva cantidad: ");
-                        if (int.TryParse(Console.ReadLine(), out int nuevaCantidad) && nuevaCantidad > 0)
+                        if (int.TryParse(Console.ReadLine(), out int Cantidadmodificada) && Cantidadmodificada > 0)
                         {
-                            platoActual.Cantidad = nuevaCantidad;
+                            platoActual.Cantidad = Cantidadmodificada;
                             platoEncontrado = true;
                             Console.WriteLine("Cantidad actualizada.");
                         }
@@ -604,8 +605,110 @@ private ListaEnlazada<Plato> ListaPlato = new ListaEnlazada<Plato>();
                 {
                     Console.WriteLine("No se encontró el plato con código: " + codigoPlato);
                 }
+                pedido.MostrarResumen();
             }
 
+            else if (opcion == "2")
+            {
+                Console.WriteLine("Ingrese el código del plato a eliminar:");
+                string codigoEliminar = Console.ReadLine();
+
+                Cola<Platopedido> tempPlatos = new Cola<Platopedido>();
+                bool platoEliminado = false;
+                int cantidadPlatos = pedido.Platos.Tamano();
+
+                for (int i = 0; i < cantidadPlatos; i++)
+                {
+                    Platopedido platoActual = pedido.Platos.Primero();
+                    pedido.Platos.Eliminar();
+
+                    if (!platoEliminado && platoActual.CodigoPedido == codigoEliminar)
+                    {
+                        platoEliminado = true;
+                        Console.WriteLine("Plato eliminado del pedido.");
+                        continue;
+                    }
+                    
+                        tempPlatos.Agregar(platoActual);
+                    }
+
+                    for (int i = 0; i < cantidadPlatos; i++)
+                    {
+                        pedido.Platos.Agregar(tempPlatos.Primero());
+                        tempPlatos.Eliminar();
+                    }
+                    if (!platoEliminado)
+                    {
+                        Console.WriteLine("No se encontró el plato con código: " + codigoEliminar);
+                    }
+                    pedido.MostrarResumen();
+                
+            }
+            else if (opcion == "3")
+            {
+                if (ListaPlato.Cabeza == null)
+                {
+                    Console.WriteLine("No hay platos disponibles para agregar al pedido.");
+                    return;
+                }
+                Console.WriteLine("Platos disponibles:");
+                Nodo<Plato> actualPlato = ListaPlato.Cabeza;
+                while (actualPlato != null)
+                {
+                    Plato plato = actualPlato.Valor;
+                    Console.WriteLine($"Código: {plato.Codigo}, Nombre: {plato.Nombre}, Precio: {plato.Precio}, Descripcion: {plato.Descripcion}");
+                    actualPlato = actualPlato.Siguiente;
+                }
+
+                Console.WriteLine("Ingrese el código del plato a agregar al pedido: ");
+                string codigoPlato = Console.ReadLine();
+
+                Plato platoSeleccionado = BuscarPlato(codigoPlato);
+                if (platoSeleccionado == null)
+                {
+                    Console.WriteLine("No se encontró un plato con el código proporcionado.");
+                    continue;
+                }
+                Console.WriteLine("Ingrese la cantidad deseada: ");
+                if (!int.TryParse(Console.ReadLine(), out int cantidad) || cantidad <= 0)
+                {
+                    Console.WriteLine("Cantidad inválida. Debe ser un número mayor a 0.");
+                    continue;
+                }
+
+                Platopedido nuevoPlatopedido = new Platopedido(platoSeleccionado.Codigo, cantidad, platoSeleccionado.Precio);
+                pedido.AgregarPlato(nuevoPlatopedido);
+                Console.WriteLine($"Plato {platoSeleccionado.Nombre} agregado al pedido.");
+                pedido.MostrarResumen();
+            }
+            else if (opcion == "4")
+            {
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Opción invalida, intente nuevamente");
+                continue;
+            }
+
+            decimal nuevoTotal = 0;
+            Cola<Platopedido> recalculoPlatos = new Cola<Platopedido>();
+            int nuevaCantidad = pedido.Platos.Tamano();
+
+            for (int i = 0; i < nuevaCantidad; i++)
+            {
+                Platopedido platoParaRecalcular = pedido.Platos.Primero();
+                nuevoTotal += platoParaRecalcular.PrecioTotal;
+                recalculoPlatos.Agregar(platoParaRecalcular);
+                pedido.Platos.Eliminar();
+            }
+                    
+            for (int i = 0; i < nuevaCantidad; i++)
+            {
+                pedido.Platos.Agregar(recalculoPlatos.Primero());
+                recalculoPlatos.Eliminar(); 
+            }
+            pedido.Total = nuevoTotal;
         }
     }
 
