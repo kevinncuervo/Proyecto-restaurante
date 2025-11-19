@@ -262,4 +262,166 @@ class Program
                 }
             }
         }
+        static void MostrarMenuPlato()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine($"----- Gestión de Platos en: {restauranteActual.Nombre} -----");
+                Console.WriteLine("1. Crear plato");
+                Console.WriteLine("2. Editar plato");
+                Console.WriteLine("3. Eliminar plato");
+                Console.WriteLine("4. Listar platos");
+                Console.WriteLine("5. Volver al menú anterior");
+                Console.Write("Seleccione una opción: ");
+                string opcion = Console.ReadLine();
+
+                if (opcion == "1")
+                {
+                    Console.WriteLine("----- Crear Plato -----");
+                    Console.Write("Ingrese el código del plato: ");
+                    string codigo = Console.ReadLine();
+                    Console.Write("Ingrese el nombre del plato: ");
+                    string nombre = Console.ReadLine();
+                    Console.Write("Ingrese el precio del plato: ");
+                    if (!decimal.TryParse(Console.ReadLine(), out decimal precio))
+                    {
+                        Console.Write("Precio inválido. Ingrese un valor numérico para el precio: ");
+                        Console.WriteLine("Presione enter para continuar.");
+                        continue;
+                    }
+                    Console.Write("Ingrese la descripción del plato: ");
+                    string descripcion = Console.ReadLine();
+
+                    restauranteActual.AgregarPlatos(codigo, nombre, descripcion, precio);
+                    Console.WriteLine("Plato creado exitosamente. Presione Enter para continuar.");
+                    Console.ReadLine();
+                }
+                else if (opcion == "2")
+                {
+                    Console.WriteLine("----- Editar Plato -----");
+                    Console.Write("Ingrese el código del plato a editar: ");
+                    string codigoEditar = Console.ReadLine();
+                    Console.Write("Ingrese el nuevo nombre del plato: ");
+                    string nuevoNombre = Console.ReadLine();
+                    Console.Write("Ingrese el nuevo precio del plato: ");
+                    if (!decimal.TryParse(Console.ReadLine(), out decimal nuevoPrecio))
+                    {
+                        Console.Write("Precio inválido. Ingrese un valor numérico para el precio: ");
+                        Console.WriteLine("Presione enter para continuar.");
+                        continue;
+                    }
+                    Console.Write("Ingrese la nueva descripción del plato: ");
+                    string nuevaDescripcion = Console.ReadLine();
+
+                    restauranteActual.EditarPlato(codigoEditar, nuevoNombre, nuevaDescripcion, nuevoPrecio);
+                    Console.WriteLine("Plato editado exitosamente. Presione Enter para continuar.");
+                    Console.ReadLine();
+                }
+                else if (opcion == "3")
+                {
+                    Console.WriteLine("----- Eliminar Plato -----");
+                    Console.Write("Ingrese el código del plato a eliminar: ");
+                    string codigoEliminar = Console.ReadLine();
+
+                   restauranteActual.BorrarPlatos(codigoEliminar);
+                    Console.WriteLine("Plato eliminado exitosamente. Presione Enter para continuar.");
+                    Console.ReadLine();
+                }
+                else if (opcion == "4")
+                {  
+                    Console.WriteLine("----- Lista de Platos -----");
+                    restauranteActual.ListarPlatos();
+                    Console.WriteLine("Presione Enter para continuar.");
+                    Console.ReadLine();
+                }
+                else if (opcion == "5")
+                {
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Opción inválida. Presione Enter para continuar.");
+                    Console.ReadLine();
+                }
+            }
+        }
+        static void MostrarMenuPedido()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine($"----- Gestión de Pedidos en: {restauranteActual.Nombre} -----");
+                Console.WriteLine("0. Volver al menú anterior");
+                Console.WriteLine("1. Crear pedido");
+                Console.WriteLine("2. Despachar pedido");
+                Console.WriteLine("3. Cancelar pedido");
+                Console.WriteLine("4. Editar pedido");
+                Console.WriteLine("5. Reporte de ventas");
+                Console.Write("Seleccione una opción: ");
+                string opcion = Console.ReadLine();
+
+                if (opcion == "1")
+                {  
+                    restauranteActual.CrearPedido();
+                    Console.WriteLine("Presione Enter para continuar.");
+                    Console.ReadLine();
+                }
+                else if(opcion == "2")
+                {
+                    restauranteActual.DespacharPedido();
+                    Console.WriteLine("Presione Enter para continuar.");
+                    Console.ReadLine();
+                }
+                else if (opcion == "3")
+                {
+                    Console.WriteLine("----- Cancelar Pedido -----");
+                    Console.Write("Ingrese el ID del pedido a cancelar: ");
+                    if (!int.TryParse(Console.ReadLine(), out int idCancelar))
+                    {
+                        restauranteActual.CancelarPedido(idCancelar);
+                    }
+                    else
+                    {
+                        Console.WriteLine("ID inválido.");
+                    }
+                    Console.WriteLine("Presione Enter para continuar.");
+                    Console.ReadLine();
+                }
+                else if (opcion == "4")
+                {
+                    Console.WriteLine("----- Editar Pedido -----");
+                    Console.Write("Ingrese el ID del pedido a editar: ");
+                    if (!int.TryParse(Console.ReadLine(), out int idEditar))
+                    {
+                        restauranteActual.EditarPedido(idEditar);
+                    }
+                    else
+                    {
+                        Console.WriteLine("ID inválido.");
+                    }
+                    Console.WriteLine("Presione Enter para continuar.");
+                    Console.ReadLine();
+                }
+                    else if (opcion == "5")
+                    {
+                        Console.Clear();
+                        Console.WriteLine($"----- Reporte de Ventas en: {restauranteActual.Nombre} -----");
+                        restauranteActual.MostrarHistorialVentas();
+                        Console.WriteLine($"Total de ventas acumuladas: {restauranteActual.TotalVentas()}");
+                        Console.WriteLine($"Cantidad de ventas realizadas: {restauranteActual.CantidadVentas()}");
+                        Console.WriteLine("Presione Enter para continuar.");
+                        Console.ReadLine();
+                    }
+                else if(opcion == "0")
+                {
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Opción inválida. Presione Enter para continuar.");
+                    Console.ReadLine();
+                }
+            }
+        }
     }
