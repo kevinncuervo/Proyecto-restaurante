@@ -803,7 +803,17 @@ private ListaEnlazada<Plato> ListaPlato = new ListaEnlazada<Plato>();
     public string Celular
     {
         get { return celular; }
-        set { celular = value; }
+        set
+        {
+            if (value.Length != 10 || value.All(char.IsDigit))
+            {
+                Console.WriteLine("El número de celular debe tener 10 dígitos y solo contener números.");
+            }
+            else
+            {
+                celular = value;
+            }
+        }
     }
 
     public string Direccion
