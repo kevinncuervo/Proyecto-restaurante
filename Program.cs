@@ -27,12 +27,13 @@ class Program
                 else
                 {
                     Console.WriteLine("Restaurantes disponibles:");
-                    sistema.ListarRestaurante();
-                                      
+                    sistema.ListarRestauranteNumerados();
+                    int cantidadRestaurantes = sistema.CantidadRestaurantes();
+                    Console.WriteLine((sistema.CantidadRestaurantes() + 1) + ". Crear nuevo restaurante");
+
                     Console.WriteLine("Seleccione un restaurante por número:");
                     string input = Console.ReadLine();
 
-                    int cantidadRestaurantes = sistema.CantidadRestaurantes();
                     if (int.TryParse(input, out int opcion) && opcion >= 1 && opcion <= cantidadRestaurantes + 1)
                         
                     {

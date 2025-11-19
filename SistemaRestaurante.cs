@@ -55,7 +55,7 @@ public class SistemaRestaurante
     {
         return ListaRestaurante.Cabeza != null;
     }
-    public void ListarRestaurante()
+    public int ListarRestaurante()
     {
         int contador = 0;
         Nodo<Restaurante> actual = ListaRestaurante.Cabeza;
@@ -72,6 +72,7 @@ public class SistemaRestaurante
             Console.WriteLine("-------------------------------------");
             actual = actual.Siguiente;
         }
+        return contador;
     }
 
     public void BorrarRestaurante(string identificador)
@@ -122,8 +123,8 @@ public class SistemaRestaurante
     }
     public Restaurante EscogerRestaurantePorIndice(int indice)
     {
-        Nodo<Restaurante> actual = ListaRestaurante.Cabeza;
         int contador = 1;
+        Nodo<Restaurante> actual = ListaRestaurante.Cabeza:
 
         while (actual != null)
         {
@@ -147,5 +148,16 @@ public class SistemaRestaurante
             actual = actual.Siguiente;
         }
         return contador;
+    }
+    public void ListarRestauranteNumerados()
+    {
+        Nodo<Restaurante> actual = ListaRestaurante.Cabeza;
+        int contador = 1;
+        while (actual != null)
+        {
+            Console.WriteLine($"{contador}. {actual.Valor.Nombre} (NIT: {actual.Valor.Nit})");
+            actual = actual.Siguiente;
+            contador++;
+        }
     }
 }
