@@ -168,7 +168,7 @@ public class ListaEnlazada<T> {
 
         cantidad--;
 
-        if (cabeza.Valor.Nit == valor.Nit) 
+        if (cabeza.Valor.Equals == valor.Equals) 
         {
             cabeza = cabeza.Siguiente;
             return;
@@ -177,7 +177,7 @@ public class ListaEnlazada<T> {
         Nodo<T> actual = cabeza;
         while (actual.Siguiente != null) 
         {
-            if (actual.Siguiente.Valor.Nit == valor.Nit)
+            if (actual.Siguiente.Valor.Equals == valor.Equals)
             {
                 actual.Siguiente = actual.Siguiente.Siguiente;
                 return; 

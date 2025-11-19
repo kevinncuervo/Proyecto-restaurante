@@ -170,7 +170,7 @@ class Program
 
                     if (confirmacion.ToLower() == "sí" || confirmacion.ToLower() == "si" || confirmacion.ToLower() == "s" || confirmacion.ToLower() == "SÍ" || confirmacion.ToLower() == "SI" || confirmacion.ToLower() == "S")
                     {
-                        ListaRestaurante.Eliminar(restauranteActual.Nit);
+                        ListaRestaurante.Eliminar(restauranteActual);
                         restauranteActual = null;
                         Console.WriteLine("Restaurante eliminado exitosamente. Presione Enter para continuar.");
                         Console.ReadLine();
@@ -186,6 +186,80 @@ class Program
                     Console.WriteLine("Opción inválida. Presione Enter para continuar.");
                     Console.ReadLine();
                 }   
+            }
+        }
+        static void MostrarMenuCliente()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine($"----- Gestión de Clientes en: {restauranteActual.Nombre} -----");
+                Console.WriteLine("1. Crear cliente");
+                Console.WriteLine("2. Editar cliente");
+                Console.WriteLine("3. Eliminar cliente");
+                Console.WriteLine("4. Listar clientes");
+                Console.WriteLine("5. Volver al menú anterior");
+                Console.Write("Seleccione una opción: ");
+                string opcion = Console.ReadLine();
+
+                if (opcion == "1")
+                {
+                    Console.WriteLine("----- Crear Cliente -----");
+                    Console.Write("Ingrese la cédula del cliente: ");
+                    string cedula = Console.ReadLine();
+                    Console.Write("Ingrese el nombre del cliente: ");
+                    string nombre = Console.ReadLine();
+                    Console.Write("Ingrese el celular del cliente: ");
+                    string celular = Console.ReadLine();
+                    Console.Write("Ingrese el email del cliente: ");
+                    string email = Console.ReadLine();
+
+                    restauranteActual.AgregarCliente(cedula, nombre, celular, email);
+                    Console.WriteLine("Cliente creado exitosamente. Presione Enter para continuar.");
+                    Console.ReadLine();
+                }
+                else if (opcion == "2")
+                {
+                    Console.WriteLine("----- Editar Cliente -----");
+                    Console.Write("Ingrese la cédula del cliente a editar: ");
+                    string cedula = Console.ReadLine();
+                    Console.Write("Ingrese el nuevo nombre del cliente: ");
+                    string nuevoNombre = Console.ReadLine();
+                    Console.Write("Ingrese el nuevo celular del cliente: ");
+                    string nuevoCelular = Console.ReadLine();
+                    Console.Write("Ingrese el nuevo email del cliente: ");
+                    string nuevoEmail = Console.ReadLine();
+
+                    restauranteActual.EditarCliente(cedula, nuevoNombre, nuevoCelular, nuevoEmail);
+                    Console.WriteLine("Cliente editado exitosamente. Presione Enter para continuar.");
+                    Console.ReadLine();
+                }
+                else if (opcion == "3")
+                {
+                    Console.WriteLine("----- Eliminar Cliente -----");
+                    Console.Write("Ingrese la cédula del cliente a eliminar: ");
+                    string cedulaEliminar = Console.ReadLine();
+
+                    restauranteActual.BorrarCliente(cedulaEliminar);
+                    Console.WriteLine("Cliente eliminado exitosamente. Presione Enter para continuar.");
+                    Console.ReadLine();
+                }
+                else if (opcion == "4")
+                {  
+                    Console.WriteLine("----- Lista de Clientes -----");
+                    restauranteActual.ListarClientes();
+                    Console.WriteLine("Presione Enter para continuar.");
+                    Console.ReadLine();
+                }
+                else if (opcion == "5")
+                {
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Opción inválida. Presione Enter para continuar.");
+                    Console.ReadLine();
+                }
             }
         }
     }
