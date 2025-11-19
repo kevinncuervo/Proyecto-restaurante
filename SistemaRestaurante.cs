@@ -124,7 +124,7 @@ public class SistemaRestaurante
     public Restaurante EscogerRestaurantePorIndice(int indice)
     {
         int contador = 1;
-        Nodo<Restaurante> actual = ListaRestaurante.Cabeza:
+        Nodo<Restaurante> actual = ListaRestaurante.Cabeza;
 
         while (actual != null)
         {

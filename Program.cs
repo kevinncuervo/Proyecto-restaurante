@@ -30,6 +30,7 @@ class Program
                     sistema.ListarRestauranteNumerados();
                     int cantidadRestaurantes = sistema.CantidadRestaurantes();
                     Console.WriteLine((sistema.CantidadRestaurantes() + 1) + ". Crear nuevo restaurante");
+                    Console.WriteLine("0. Salir");
 
                     Console.WriteLine("Seleccione un restaurante por número:");
                     string input = Console.ReadLine();
@@ -37,7 +38,12 @@ class Program
                     if (int.TryParse(input, out int opcion) && opcion >= 1 && opcion <= cantidadRestaurantes + 1)
                         
                     {
-                        if (opcion == cantidadRestaurantes + 1)
+                        if (opcion == 0)
+                        {
+                            Console.WriteLine("Saliendo del sistema. ¡Hasta luego!");
+                            return;
+                        }
+                        else if (opcion == cantidadRestaurantes + 1)
                         {
                             CrearRestaurante();
                         }
@@ -73,7 +79,6 @@ class Program
             string direccion = Console.ReadLine();
 
             sistema.AgregarRestaurante(nit, nombre, dueño, celular, direccion);
-            restauranteActual = sistema.EscogerRestaurante(nit);
 
             Console.WriteLine($"Restaurante '{nombre}' creado exitosamente. Presione Enter para continuar.");
             Console.ReadLine();
