@@ -377,7 +377,7 @@ class Program
                 {
                     Console.WriteLine("----- Cancelar Pedido -----");
                     Console.Write("Ingrese el ID del pedido a cancelar: ");
-                    if (!int.TryParse(Console.ReadLine(), out int idCancelar))
+                    if (int.TryParse(Console.ReadLine(), out int idCancelar))
                     {
                         restauranteActual.CancelarPedido(idCancelar);
                     }
@@ -392,7 +392,7 @@ class Program
                 {
                     Console.WriteLine("----- Editar Pedido -----");
                     Console.Write("Ingrese el ID del pedido a editar: ");
-                    if (!int.TryParse(Console.ReadLine(), out int idEditar))
+                    if (int.TryParse(Console.ReadLine(), out int idEditar))
                     {
                         restauranteActual.EditarPedido(idEditar);
                     }
