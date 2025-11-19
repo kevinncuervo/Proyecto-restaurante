@@ -89,4 +89,103 @@ class Program
             Console.WriteLine($"Restaurante '{nombre}' creado exitosamente. Presione Enter para continuar.");
             Console.ReadLine();
         }
+        static void MostrarMenuPrincipal()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine($"----- Restaurante: {restauranteActual.Nombre} -----");
+                Console.WriteLine("1. Restaurante");
+                Console.WriteLine("2. Cliente");
+                Console.WriteLine("3. Plato");
+                Console.WriteLine("4. Pedido");
+                Console.WriteLine("5. Volver al menú de restaurantes");
+                Console.Write("Seleccione una opción: ");
+                string opcion = Console.ReadLine();
+
+                if (opcion == "1")
+                {
+                    MostrarMenuRestaurante();
+                }
+                else if (opcion == "2")
+                {
+                    MostrarMenuCliente();
+                }
+                else if (opcion == "3")
+                {
+                    MostrarMenuPlato();
+                }
+                else if (opcion == "4")
+                {
+                    MostrarMenuPedido();
+                }
+                else if (opcion == "5")
+                {
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Opción inválida. Presione Enter para continuar.");
+                    Console.ReadLine();
+                }
+            }
+        }
+        static void MostrarMenuRestaurante()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine($"----- Gestión del Restaurante: {restauranteActual.Nombre} -----");
+                Console.WriteLine("1. Editar restaurante");
+                Console.WriteLine("2. Eliminar restaurante");
+                Console.WriteLine("3. Volver al menú principal");
+                Console.Write("Seleccione una opción: ");
+                string opcion = Console.ReadLine();
+
+                if (opcion == "1")
+                {
+                    Console.WriteLine("----- Editar Restaurante -----");
+                    Console.Write("Ingrese el nuevo nombre del restaurante: ");
+                    string nuevoNombre = Console.ReadLine();
+                    Console.Write("Ingrese el nuevo nombre del dueño: ");
+                    string nuevoDueño = Console.ReadLine();
+                    Console.Write("Ingrese el nuevo celular del restaurante: ");
+                    string nuevoCelular = Console.ReadLine(); 
+                    Console.Write("Ingrese la nueva dirección del restaurante: ");
+                    string nuevaDireccion = Console.ReadLine();
+
+                    restauranteActual.Nombre = nuevoNombre;
+                    restauranteActual.Dueño = nuevoDueño;
+                    restauranteActual.Celular = nuevoCelular; 
+                    restauranteActual.Direccion = nuevaDireccion;
+
+                    Console.WriteLine("Restaurante actualizado exitosamente. Presione Enter para continuar.");
+                    Console.ReadLine();
+                }
+                else if (opcion == "2")
+                {
+                    Console.WriteLine("----- Eliminar Restaurante -----");
+                    Console.Write("¿Está seguro que desea eliminar este restaurante?: ");
+                    string confirmacion = Console.ReadLine();
+
+                    if (confirmacion.ToLower() == "sí" || confirmacion.ToLower() == "si" || confirmacion.ToLower() == "s" || confirmacion.ToLower() == "SÍ" || confirmacion.ToLower() == "SI" || confirmacion.ToLower() == "S")
+                    {
+                        ListaRestaurante.Eliminar(restauranteActual.Nit);
+                        restauranteActual = null;
+                        Console.WriteLine("Restaurante eliminado exitosamente. Presione Enter para continuar.");
+                        Console.ReadLine();
+                        return;
+                    }
+                }
+                 else if (opcion == "3")
+                {
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Opción inválida. Presione Enter para continuar.");
+                    Console.ReadLine();
+                }   
+            }
+        }
     }

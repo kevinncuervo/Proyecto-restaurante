@@ -159,7 +159,7 @@ public class ListaEnlazada<T> {
     }
     
 
-    /*public void Eliminar(Tienda valor) {
+    public void Eliminar(T valor) {
         
         if (cabeza == null) 
         {
@@ -174,7 +174,7 @@ public class ListaEnlazada<T> {
             return;
         }
 
-        Nodo actual = cabeza;
+        Nodo<T> actual = cabeza;
         while (actual.Siguiente != null) 
         {
             if (actual.Siguiente.Valor.Nit == valor.Nit)
@@ -185,7 +185,7 @@ public class ListaEnlazada<T> {
             actual = actual.Siguiente;
         }
         
-    }*/
+    }
 
     /*public void EliminarDuplicados() 
     {
