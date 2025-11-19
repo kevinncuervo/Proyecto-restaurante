@@ -1,6 +1,5 @@
 namespace Listas;
 using System;
-using System.Runtime.Serialization.Formatters;
 
 public class Restaurante
 {
@@ -736,6 +735,53 @@ private ListaEnlazada<Plato> ListaPlato = new ListaEnlazada<Plato>();
         pedidoADespachar.MostrarResumen();
     }
     
+    public void CancelarPedido(int id)
+    {
+        if (ColaPedidos.EstaVacia())
+        {
+            Console.WriteLine("No hay pedidos pendientes.");
+            return;
+        }
+
+        Pedido pedidoACancelar = null;
+        Cola<Pedido> tempCola = new Cola<Pedido>();
+        int cantidad = ColaPedidos.Tamano();
+
+        for (int i = 0; i < cantidad; i++)
+        {
+            Pedido pedidoActual = ColaPedidos.Primero();
+            ColaPedidos.Eliminar();
+
+            if (pedidoActual.IdPedido == id)
+            {
+                if (pedidoActual.Estado != "Pendiente")
+                {
+                    Console.WriteLine("El pedido con ID: " + pedidoActual.IdPedido + " no está en estado 'Pendiente' y no puede ser cancelado.");
+                    tempCola.Agregar(pedidoActual);
+                    continue;
+                }
+                
+                pedidoActual.Estado = "Cancelado";
+                pedidoACancelar = pedidoActual;
+                Console.WriteLine("Pedido con ID: " + pedidoActual.IdPedido + " ha sido cancelado exitosamente.");
+                pedidoACancelar.MostrarResumen();
+            }
+            else
+            {
+                tempCola.Agregar(pedidoActual);
+            }
+        }
+        while (!tempCola.EstaVacia())
+        {
+            ColaPedidos.Agregar(tempCola.Primero());
+            tempCola.Eliminar();
+        }
+
+        if (pedidoACancelar == null)
+        {
+            Console.WriteLine("No se encontró ningún pedido con el ID proporcionado.");
+        }
+    }
     public string Nit
     {
         get { return nit; }

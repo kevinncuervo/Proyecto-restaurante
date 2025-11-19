@@ -68,8 +68,7 @@ public class Pedido
         Console.WriteLine($"Estado: {estado}");
         Console.WriteLine($"Fecha y Hora: {fechaHora}");
         Console.WriteLine("Detalle del pedido: ");
-        Nodo<Platopedido> actual = platos.Cabeza;
-
+       
         Cola<Platopedido> temp = new Cola<Platopedido>();
         int cantidad = platos.Tamano();
 
