@@ -712,6 +712,29 @@ private ListaEnlazada<Plato> ListaPlato = new ListaEnlazada<Plato>();
         }
     }
 
+    public void DespacharPedido()
+    {
+        if (ColaPedidos.EstaVacia())
+        {
+            Console.WriteLine("No hay pedidos pendientes.");
+            return;
+        }
+
+        Pedido pedidoADespachar = ColaPedidos.Primero();
+       
+        if (pedidoADespachar.Estado != "Pendiente")
+        {
+            Console.WriteLine("El pedido con ID: " + pedidoADespachar.IdPedido + " no está en estado 'Pendiente' y no puede ser despachado.");
+            return;
+        }
+
+        pedidoADespachar.Estado = "Despachado";
+        acumuladoVentas += pedidoADespachar.Total;
+        ReporteVentas.AgregarElemento(pedidoADespachar.Total);
+        ColaPedidos.Eliminar();
+        Console.WriteLine("Pedido con ID: " + pedidoADespachar.IdPedido + " ha sido despachado exitosamente.");
+        pedidoADespachar.MostrarResumen();
+    }
     
     public string Nit
     {
