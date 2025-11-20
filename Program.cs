@@ -208,8 +208,18 @@ class Program
                     Console.Write("Ingrese el email del cliente: ");
                     string email = Console.ReadLine();
 
-                    restauranteActual.AgregarCliente(cedula, nombre, celular, email);
-                    Console.WriteLine("Cliente creado exitosamente. Presione Enter para continuar.");
+                    bool creado = restauranteActual.AgregarCliente(cedula, nombre, celular, email);
+
+                    if (creado)
+                    {
+                        Console.WriteLine("Cliente creado exitosamente.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No se pudo crear el cliente.");
+                    }
+                    
+                    Console.WriteLine("Presione Enter para continuar.");
                     Console.ReadLine();
                 }
                 else if (opcion == "2")

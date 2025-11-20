@@ -37,32 +37,32 @@ public class Restaurante
             Console.WriteLine("Cliente creado: " + cliente.Nombre);
         }
 
-        public void AgregarCliente(string cedula, string nombre, string celular, string email)
+        public bool AgregarCliente(string cedula, string nombre, string celular, string email)
         {
             if(ClienteExiste(cedula))
             {
                 Console.WriteLine("El cliente con cédula: " + cedula + " ya existe.");
-                return;
+                return false;
             }
             if (string.IsNullOrWhiteSpace(cedula) || string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(celular) || string.IsNullOrWhiteSpace(email))
             {
                 Console.WriteLine("Todos los campos son obligatorios para agregar un cliente.");
-                return;
+                return false;
             }
             if (celular.Length != 10 || !celular.All(char.IsDigit))
             {
                 Console.WriteLine("El número de celular debe tener 10 dígitos y solo contener números.");
-                return;
+                return false;
             }
             if (!EmailValido(email))
             {
                 Console.WriteLine("El email proporcionado no es válido.");
-                return;
+                return false;
             }
 
             Cliente cliente = new Cliente(cedula, nombre, celular, email);
             ListaCliente.Agregar(cliente);
-            Console.WriteLine("Cliente agregado: " + cliente.Nombre);
+            return true;
         }
 
         public void ListarClientes()
