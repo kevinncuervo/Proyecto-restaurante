@@ -355,7 +355,7 @@ private ListaEnlazada<Plato> ListaPlato = new ListaEnlazada<Plato>();
         Console.WriteLine("Venta registrada por $" + totalVenta);
     }
 
-    public void CrearPedido()
+        public void CrearPedido()
     {
         Console.WriteLine("Ingrese la cédula del cliente: ");
         string cedulaCliente = Console.ReadLine();
@@ -370,6 +370,7 @@ private ListaEnlazada<Plato> ListaPlato = new ListaEnlazada<Plato>();
             Console.WriteLine("No se encontró un cliente con la cédula proporcionada.");
             return;
         }
+
         Pedido nuevoPedido = new Pedido(cedulaCliente);
 
         if (ListaPlato.Cabeza == null)
@@ -389,9 +390,10 @@ private ListaEnlazada<Plato> ListaPlato = new ListaEnlazada<Plato>();
             actualPlato = actualPlato.Siguiente;
             contador++;    
         }
+
         while (true)
         {
-            Console.WriteLine("Ingrese el código del plato a agregar al pedido (o 'salir' para finalizar): ");
+            Console.WriteLine("Ingrese el código del plato a agregar al pedido: ");
             string codigoPlato = Console.ReadLine();
 
             Plato platoSeleccionado = BuscarPlato(codigoPlato);
@@ -405,39 +407,41 @@ private ListaEnlazada<Plato> ListaPlato = new ListaEnlazada<Plato>();
             Console.WriteLine("Ingrese la cantidad deseada: ");
             if (!int.TryParse(Console.ReadLine(), out int cantidad) || cantidad <= 0)
             {
-                Console.WriteLine("Cantidad inválida. Debe ser un número entero positivo.");
+                Console.WriteLine("Cantidad inválida.");
                 continue;
             }
 
             Platopedido nuevoPlatopedido = new Platopedido(platoSeleccionado.Codigo, cantidad, platoSeleccionado.Precio);
-           
             nuevoPedido.AgregarPlato(nuevoPlatopedido);
+
             Console.WriteLine($"Plato {platoSeleccionado.Nombre} agregado al pedido.");
 
             Console.WriteLine("¿Desea agregar otro plato?: ");
             string respuesta = Console.ReadLine();
-            if (respuesta.ToLower() != "s" && respuesta.ToLower() != "si" && respuesta.ToLower() != "SÍ" && respuesta.ToLower() != "SI" && respuesta.ToLower() != "Sí" && respuesta.ToLower() != "sÍ")
+            if (respuesta.ToLower() != "s" && respuesta.ToLower() != "si" &&
+                respuesta.ToLower() != "sí")
             {
                 break;
             }
-            
-            Console.WriteLine("Resumen del pedido:");
-            nuevoPedido.MostrarResumen();
+        }
 
-            Console.WriteLine("¿Desea guardar el pedido?");
-            string guardarRespuesta = Console.ReadLine();
-            if (respuesta.ToLower() != "s" && respuesta.ToLower() != "si" && respuesta.ToLower() != "SÍ" && respuesta.ToLower() != "SI" && respuesta.ToLower() != "Sí" && respuesta.ToLower() != "sÍ")
-            {
-                ColaPedidos.Agregar(nuevoPedido);
-                Console.WriteLine("Pedido guardado exitosamente.");
-            }
-            else
-            {
-                Console.WriteLine("Pedido no guardado.");
-            }
+        Console.WriteLine("Resumen del pedido:");
+        nuevoPedido.MostrarResumen();
+
+        Console.WriteLine("¿Desea guardar el pedido?");
+        string guardarRespuesta = Console.ReadLine();
+
+        if (guardarRespuesta.ToLower() == "s" || guardarRespuesta.ToLower() == "si" ||
+            guardarRespuesta.ToLower() == "sí")
+        {
+            ColaPedidos.Agregar(nuevoPedido);
+            Console.WriteLine("Pedido guardado exitosamente.");
+        }
+        else
+        {
+            Console.WriteLine("Pedido no guardado.");
         }
     }
-
     public void ListarPedidosPendientes()
     {
         if (ColaPedidos.EstaVacia())
