@@ -394,7 +394,7 @@ class Program
                     {
                         Console.WriteLine("ID inválido.");
                     }
-                    Console.WriteLine("Presione Enter para continuar.");
+                    Console.WriteLine("Presione enter para continuar.");
                     Console.ReadLine();
                 }
                     else if (opcion == "5")
